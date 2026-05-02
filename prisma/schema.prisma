@@ -1,0 +1,100 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model User {
+  id       String @id @default(uuid())
+  name     String
+  email    String
+  password String
+
+  created_at DateTime? @default(now())
+  updated_at DateTime  @updatedAt
+
+  workouts         Workouts[]
+  personal_records Personal_records[]
+
+  @@map("Users")
+}
+
+model Workouts {
+  id         String    @id @default(uuid())
+  name       String
+  created_at DateTime? @default(now())
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  exercises    Exercises[]
+  workout_logs Workout_logs[]
+
+  @@map("Workouts")
+}
+
+model Workout_logs {
+  id           String    @id @default(uuid())
+  started_at   DateTime
+  completed_at DateTime?
+
+  workouts    Workouts @relation(fields: [workouts_id], references: [id])
+  workouts_id String
+
+  exercises_logs Exercises_logs[]
+
+  @@map("Workout_logs")
+}
+
+model Exercises {
+  id    String  @id @default(uuid())
+  name  String
+  sets  Int
+  reps  Int
+  notes String?
+
+  workouts    Workouts @relation(fields: [workouts_id], references: [id])
+  workouts_id String
+
+  exercises_logs Exercises_logs[]
+
+  @@map("Exercises")
+}
+
+model Exercises_logs {
+  id         String  @id @default(uuid())
+  set_number Int
+  weight     Float
+  reps       Int
+  completed  Boolean
+
+  workout_logs    Workout_logs @relation(fields: [workout_logs_id], references: [id])
+  workout_logs_id String
+
+  exercise    Exercises @relation(fields: [exercise_id], references: [id])
+  exercise_id String
+
+  @@map("Exercises_logs")
+}
+
+model Personal_records {
+  id            String    @id @default(uuid())
+  exercise_name String
+  weight        Float
+  reps          Int
+  note          String?
+  date          DateTime? @default(now())
+
+  user    User   @relation(fields: [user_id], references: [id])
+  user_id String
+
+  @@map("Personal_records")
+}
