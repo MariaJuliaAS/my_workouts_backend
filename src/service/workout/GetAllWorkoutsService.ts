@@ -5,8 +5,11 @@ class GetAllWorkoutsService {
         if (!user_id) throw new Error("User ID is required");
 
         const workouts = await prisma.workouts.findMany({
-            where: { 
-                user: { id: user_id } 
+            where: {
+                user: { id: user_id }
+            },
+            include: {
+                exercises: true
             }
         });
 

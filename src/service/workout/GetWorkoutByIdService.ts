@@ -6,9 +6,12 @@ class GetWorkoutByIdService {
         if (!user_id) throw new Error("User ID is required");
 
         const workout = await prisma.workouts.findFirst({
-            where: { 
-                id: workout_id, 
-                user: { id: user_id } 
+            where: {
+                id: workout_id,
+                user: { id: user_id }
+            },
+            include: {
+                exercises: true
             }
         });
         if (!workout) throw new Error("Workout not found");
