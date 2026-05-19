@@ -34,6 +34,9 @@ class CreateWorkoutService {
                         },
                     }
                     : {}),
+            },
+            include: {
+                exercises: true,
             }
         });
 
