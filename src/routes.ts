@@ -27,4 +27,5 @@ router.delete("/workout/:id", isAuthenticated, new DeleteWorkoutController().han
 router.post("/workout_log/start/:workout_id", isAuthenticated, new StartWorkoutLogController().handle)
 router.put("/workout_log/completed/:workoutLog_id", isAuthenticated, new CompletedWorkoutLogController().handle)
 
+
 export { router };
