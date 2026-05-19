@@ -11,16 +11,41 @@ class DeleteWorkoutService {
                 user: { id: user_id } 
             }
         });
-
         if (!workout) throw new Error("Workout not found or not owned by user");
 
-        await prisma.workouts.delete({ 
-            where: { id: workout_id } 
+        const workoutLogs = await prisma.workout_logs.findMany({
+            where: { workouts_id: workout_id },
+            select: { id: true },
         });
+        const workoutLogIds = workoutLogs.map(w => w.id);
 
-        return { 
+        if (workoutLogIds.length) {
+            await prisma.exercises_logs.deleteMany({
+                where: { workout_logs_id: { in: workoutLogIds } },
+            });
+        }
+
+        await prisma.workout_logs.deleteMany({ where: { workouts_id: workout_id } });
+
+        const exercises = await prisma.exercises.findMany({
+            where: { workouts_id: workout_id },
+            select: { id: true },
+        });
+        const exerciseIds = exercises.map(e => e.id);
+
+        if (exerciseIds.length) {
+            await prisma.exercises_logs.deleteMany({
+                where: { exercise_id: { in: exerciseIds } },
+            });
+        }
+
+        await prisma.exercises.deleteMany({ where: { workouts_id: workout_id } });
+
+        await prisma.workouts.delete({ where: { id: workout_id } });
+
+        return {
             message: "Workout '" + workout.name + "' deleted",
-         };
+        };
     }
 }
 
