@@ -11,7 +11,8 @@ class GetWorkoutByIdService {
                 user: { id: user_id }
             },
             include: {
-                exercises: true
+                exercises: true,
+                exercise_logs: true
             }
         });
         if (!workout) throw new Error("Workout not found");

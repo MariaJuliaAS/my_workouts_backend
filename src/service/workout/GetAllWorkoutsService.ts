@@ -9,7 +9,8 @@ class GetAllWorkoutsService {
                 user: { id: user_id }
             },
             include: {
-                exercises: true
+                exercises: true,
+                exercise_logs: true
             }
         });
 
