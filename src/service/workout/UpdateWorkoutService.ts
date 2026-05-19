@@ -43,6 +43,9 @@ class UpdateWorkoutService {
                         }))
                     }
                 } : {})
+            },
+            include: {
+                exercises: true,
             }
         });
 
