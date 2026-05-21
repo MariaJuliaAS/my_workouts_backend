@@ -11,6 +11,7 @@ import { UpdateWorkoutController } from "./controller/workout/UpdateWorkoutContr
 import { DeleteWorkoutController } from "./controller/workout/DeleteWorkoutController";
 import { StartWorkoutLogController } from "./controller/workout_log/StartWorkoutLogController";
 import { CompletedWorkoutLogController } from "./controller/workout_log/CompletedWorkoutLogController";
+import { CreatePrController } from "./controller/personal_record/CreatePrController";
 
 const router = Router();
 
@@ -26,6 +27,8 @@ router.delete("/workout/:id", isAuthenticated, new DeleteWorkoutController().han
 
 router.post("/workout_log/start/:workout_id", isAuthenticated, new StartWorkoutLogController().handle)
 router.put("/workout_log/completed/:workoutLog_id", isAuthenticated, new CompletedWorkoutLogController().handle)
+
+router.post("/personal_record", isAuthenticated, new CreatePrController().handle)
 
 
 export { router };
