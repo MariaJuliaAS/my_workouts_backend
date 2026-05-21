@@ -3,37 +3,37 @@ import { prisma } from "../../prisma/prisma";
 import Jwt from "jsonwebtoken";
 
 interface AuthRequest {
-    email: string;
+    username: string;
     password: string;
 }
 
-class AuthUserService{
-    async execute({ email, password }: AuthRequest) {
+class AuthUserService {
+    async execute({ username, password }: AuthRequest) {
         const user = await prisma.user.findFirst({
-            where:{
-                email
+            where: {
+                username
             }
         })
 
-        if(!user){
-            throw new Error("Email or password incorrect")
+        if (!user) {
+            throw new Error("Username or password incorrect")
         }
 
         const passwordMatch = await compare(password, user.password)
 
-        if(!passwordMatch){
-            throw new Error("Email or password incorrect")
+        if (!passwordMatch) {
+            throw new Error("Username or password incorrect")
         }
 
         const jwtSecret = process.env.JWT_SECRET;
-        if(!jwtSecret) {
+        if (!jwtSecret) {
             throw new Error("JWT secret not found")
         }
 
         const token = Jwt.sign(
             {
                 name: user.name,
-                email: user.email
+                email: user.username
             },
             jwtSecret,
             {
@@ -47,7 +47,7 @@ class AuthUserService{
             user: {
                 id: user.id,
                 name: user.name,
-                email: user.email
+                email: user.username
             }
         }
     }

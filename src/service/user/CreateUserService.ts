@@ -4,19 +4,19 @@ import { prisma } from "../../prisma/prisma";
 
 interface UserRequest {
     name: string;
-    email: string;
+    username: string;
     password: string;
 }
 
 class CreateUserService {
-    async execute({ name, email, password }: UserRequest) {
-        if (!email) {
-            throw new Error("Email incorrect")
+    async execute({ name, username, password }: UserRequest) {
+        if (!username) {
+            throw new Error("Username incorrect")
         }
 
         const userAlreadyExists = await prisma.user.findFirst({
             where: {
-                email
+                username
             }
         })
         if (userAlreadyExists) {
@@ -28,13 +28,13 @@ class CreateUserService {
         const user = await prisma.user.create({
             data: {
                 name,
-                email,
+                username,
                 password: hashPassword
             },
             select: {
                 id: true,
                 name: true,
-                email: true
+                username: true
             }
         })
         return user;
