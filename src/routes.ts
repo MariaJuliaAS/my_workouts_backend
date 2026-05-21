@@ -13,6 +13,7 @@ import { StartWorkoutLogController } from "./controller/workout_log/StartWorkout
 import { CompletedWorkoutLogController } from "./controller/workout_log/CompletedWorkoutLogController";
 import { CreatePrController } from "./controller/personal_record/CreatePrController";
 import { GetAllPrController } from "./controller/personal_record/GetAllPrController";
+import { DeletePrController } from "./controller/personal_record/DeletePrController";
 
 const router = Router();
 
@@ -31,6 +32,7 @@ router.put("/workout_log/completed/:workoutLog_id", isAuthenticated, new Complet
 
 router.post("/personal_record", isAuthenticated, new CreatePrController().handle)
 router.get("/personal_record", isAuthenticated, new GetAllPrController().handle)
+router.delete("/personal_record", isAuthenticated, new DeletePrController().handle)
 
 
 export { router };
