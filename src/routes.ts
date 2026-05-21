@@ -32,7 +32,7 @@ router.put("/workout_log/completed/:workoutLog_id", isAuthenticated, new Complet
 
 router.post("/personal_record", isAuthenticated, new CreatePrController().handle)
 router.get("/personal_record", isAuthenticated, new GetAllPrController().handle)
-router.delete("/personal_record", isAuthenticated, new DeletePrController().handle)
+router.delete("/personal_record/:id", isAuthenticated, new DeletePrController().handle)
 
 
 export { router };
