@@ -10,7 +10,7 @@ class GetAllWorkoutsService {
             },
             include: {
                 exercises: true,
-                exercise_logs: true
+                workout_logs: true
             }
         });
 
