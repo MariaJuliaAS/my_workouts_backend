@@ -5,7 +5,7 @@ import { router } from "./routes";
 const app = express();
 app.use(express.json());
 app.use(cors({
-    origin: "",
+    origin: "http://localhost:5173",
     credentials: true,
     optionsSuccessStatus: 200
 }));

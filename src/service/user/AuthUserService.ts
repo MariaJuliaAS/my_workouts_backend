@@ -33,7 +33,7 @@ class AuthUserService {
         const token = Jwt.sign(
             {
                 name: user.name,
-                email: user.username
+                username: user.username,
             },
             jwtSecret,
             {
