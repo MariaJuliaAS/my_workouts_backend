@@ -16,6 +16,7 @@ import { CreatePrController } from "./controller/personal_record/CreatePrControl
 import { GetAllPrController } from "./controller/personal_record/GetAllPrController";
 import { DeletePrController } from "./controller/personal_record/DeletePrController";
 import { CreateExerciseLogController } from "./controller/exercise_log/CreateExerciseLogController";
+import { UpdateExerciseLogController } from "./controller/exercise_log/UpdateExerciseLogController";
 import { GetPendingWorkoutLogController } from "./controller/workout_log/GetPendingWorkoutLogController";
 import { GetExerciseLogsByWorkoutLogController } from "./controller/exercise_log/GetExerciseLogsByWorkoutLogController";
 import { GetWorkoutLogDetailController } from "./controller/workout_log/GetWorkoutLogDetailController";
@@ -54,6 +55,7 @@ router.get("/personal_record", isAuthenticated, new GetAllPrController().handle)
 router.delete("/personal_record/:id", isAuthenticated, new DeletePrController().handle)
 
 router.post("/exercise_log", isAuthenticated, new CreateExerciseLogController().handle)
+router.put("/exercise_log/:id", isAuthenticated, new UpdateExerciseLogController().handle)
 router.get("/exercise_log/:workout_log_id", isAuthenticated, new GetExerciseLogsByWorkoutLogController().handle)
 
 router.post("/weekly_plan", isAuthenticated, new CreateWeeklyPlanController().handle)
